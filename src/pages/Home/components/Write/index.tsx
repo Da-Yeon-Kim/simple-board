@@ -3,28 +3,23 @@ import { useFormContext } from "react-hook-form";
 
 import { boardItem } from "@/types";
 import { Btn } from "@/UI/Buttons";
-import { boardLocalStorage } from "@/utils/storage";
 
 import { WriteForm } from "./WriteForm";
+import { useBoard } from "../../hooks/boardContext";
 
 export const Write = () => {
   const { handleSubmit, getValues, reset } = useFormContext<boardItem>();
+  const { addBoardItem } = useBoard();
 
   const onSubmit = () => {
     const formData = getValues();
     try {
-      const existingBoardItems = boardLocalStorage.get();
-      let boardItems: boardItem[] = [];
-      if (existingBoardItems && Array.isArray(existingBoardItems)) {
-        boardItems = existingBoardItems;
-      }
-      boardItems.push(formData);
-      boardLocalStorage.set(boardItems);
+      addBoardItem(formData);
       alert("폼이 제출되었습니다!");
       reset();
     } catch (error) {
       console.error("폼 제출 중 오류 발생:", error);
-      alert("폼 제출에 실패했습니다.");
+      alert("폼 제출 도중, 오류가 발생했습니다.");
     }
   };
 

@@ -10,3 +10,12 @@ export const Btn = styled.button`
   font-weight: 500;
   cursor: pointer;
 `;
+
+export const DeleteBtn = styled.button`
+  color: black;
+  background-color: transparent;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+`;

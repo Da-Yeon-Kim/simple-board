@@ -1,12 +1,23 @@
-import { boardItem } from "@/types";
 import styled from "@emotion/styled";
 
-export const BoardCard = ({ title, content, tag }: boardItem) => {
+import { DeleteBtn } from "@/UI/Buttons";
+import { boardItem } from "@/types";
+
+interface Props extends boardItem {
+  onRemove: (id: number) => void;
+}
+
+export const BoardCard = ({ id, title, content, tag, onRemove }: Props) => {
   return (
     <Wrapper>
-      <Title>{title}</Title>
-      <Content>{content}</Content>
-      <HashTag>{tag}</HashTag>
+      <BtnContainer>
+        <DeleteBtn onClick={() => onRemove(id)}>X</DeleteBtn>
+      </BtnContainer>
+      <CardContainer>
+        <Title>{title}</Title>
+        <Content>{content}</Content>
+        <HashTag>{tag}</HashTag>
+      </CardContainer>
     </Wrapper>
   );
 };
@@ -14,10 +25,21 @@ export const BoardCard = ({ title, content, tag }: boardItem) => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 2rem;
-  gap: 1rem;
+  padding: 1rem;
   border: 1px solid black;
   border-radius: 4px;
+`;
+
+const BtnContainer = styled.div`
+  display: flex;
+  justify-content: end;
+`;
+
+const CardContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0 1rem 1rem 1rem;
+  gap: 1rem;
 `;
 
 const Title = styled.p`

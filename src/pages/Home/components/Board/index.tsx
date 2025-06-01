@@ -1,39 +1,25 @@
 import styled from "@emotion/styled";
-import { useState, useEffect } from "react";
-
-import { boardItem } from "@/types";
-import { boardLocalStorage } from "@/utils/storage";
 
 import { BoardSearch } from "./BoardSearch";
 import { BoardCard } from "./BoardCard";
+import { useBoard } from "../../hooks/boardContext";
 
 export const Board = () => {
-  const [boardItems, setBoardItems] = useState<boardItem[]>([]);
-
-  useEffect(() => {
-    loadBoardItems();
-  }, []);
-
-  const loadBoardItems = () => {
-    const storedItems = boardLocalStorage.get();
-    if (storedItems && Array.isArray(storedItems)) {
-      setBoardItems(storedItems);
-    } else {
-      setBoardItems([]);
-    }
-  };
+  const { boardItems, removeBoardItem } = useBoard();
 
   return (
     <Wrapper>
       <BoardSearch />
       <BoardList>
         {boardItems.length > 0 ? (
-          boardItems.map((item, index) => (
+          boardItems.map((item) => (
             <BoardCard
-              key={index}
+              key={item.id}
+              id={item.id}
               title={item.title}
               content={item.content}
               tag={item.tag}
+              onRemove={() => removeBoardItem(item.id)}
             />
           ))
         ) : (
