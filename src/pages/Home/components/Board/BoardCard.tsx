@@ -21,17 +21,17 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.p`
-  font-size: 24px;
+  font-size: 1.2rem;
   font-weight: 700;
 `;
 
 const Content = styled.p`
-  font-size: 20px;
+  font-size: 1rem;
   font-weight: 500;
   line-height: 150%;
 `;
 
 const HashTag = styled.div`
-  font-size: 18px;
+  font-size: 1rem;
   font-weight: 500;
 `;

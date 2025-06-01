@@ -1,8 +1,11 @@
 import styled from "@emotion/styled";
-import { WriteForm } from "./WriteForm";
-import { Btn } from "@/UI/Buttons";
-import { boardItem } from "@/types";
 import { useFormContext } from "react-hook-form";
+
+import { boardItem } from "@/types";
+import { Btn } from "@/UI/Buttons";
+import { boardLocalStorage } from "@/utils/storage";
+
+import { WriteForm } from "./WriteForm";
 
 export const Write = () => {
   const { handleSubmit, getValues, reset } = useFormContext<boardItem>();
@@ -10,7 +13,13 @@ export const Write = () => {
   const onSubmit = () => {
     const formData = getValues();
     try {
-      localStorage.setItem("formData", JSON.stringify(formData));
+      const existingBoardItems = boardLocalStorage.get();
+      let boardItems: boardItem[] = [];
+      if (existingBoardItems && Array.isArray(existingBoardItems)) {
+        boardItems = existingBoardItems;
+      }
+      boardItems.push(formData);
+      boardLocalStorage.set(boardItems);
       alert("폼이 제출되었습니다!");
       reset();
     } catch (error) {
@@ -24,7 +33,7 @@ export const Write = () => {
       <FormContainer>
         <WriteForm formName="제목" id="title" />
         <WriteForm formName="본문" id="content" />
-        <WriteForm formName="태그" id="tag" />
+        <WriteForm formName="태그" id="tag" message="쉼표(,)로 구분해주세요." />
       </FormContainer>
       <BtnContainer>
         <Btn onClick={handleSubmit(onSubmit)}>제출</Btn>
@@ -52,4 +61,5 @@ const FormContainer = styled.div`
 const BtnContainer = styled.div`
   display: flex;
   justify-content: end;
+  gap: 1rem;
 `;

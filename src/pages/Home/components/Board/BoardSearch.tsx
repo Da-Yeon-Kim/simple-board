@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+
 import { ReactComponent as SIcon } from "@/assets/search.svg";
 
 export const BoardSearch = () => {

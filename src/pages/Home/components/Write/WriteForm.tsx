@@ -6,14 +6,18 @@ import { boardItem } from "@/types";
 interface Props {
   formName: string;
   id: "title" | "content" | "tag";
+  message?: string;
 }
 
-export const WriteForm = ({ formName, id }: Props) => {
+export const WriteForm = ({ formName, id, message }: Props) => {
   const { register } = useFormContext<boardItem>();
 
   return (
-    <InputContainer>
-      <InputLabel>{formName}</InputLabel>
+    <Wrapper>
+      <LabelContainer>
+        <InputLabel>{formName}</InputLabel>
+        {message && <InputCaption>{message}</InputCaption>}
+      </LabelContainer>
       {id === "content" ? (
         <WriteTextArea
           id={id}
@@ -27,19 +31,31 @@ export const WriteForm = ({ formName, id }: Props) => {
           placeholder={`${formName}을(를) 입력해주세요.`}
         />
       )}
-    </InputContainer>
+    </Wrapper>
   );
 };
 
-const InputContainer = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
 `;
 
+const LabelContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+`;
+
 const InputLabel = styled.label`
   font-size: 1.2rem;
   font-weight: 500;
+`;
+
+const InputCaption = styled.p`
+  color: lightcoral;
+  font-size: 0.9rem;
 `;
 
 const WriteInput = styled.input`
@@ -57,5 +73,6 @@ const WriteTextArea = styled.textarea`
   border-radius: 4px;
   outline: none;
   font-size: 1rem;
+  line-height: 150%;
   resize: none;
 `;
