@@ -2,12 +2,15 @@ import styled from "@emotion/styled";
 
 import { DeleteBtn } from "@/UI/Buttons";
 import { boardItem } from "@/types";
+import { parseTagString } from "@/utils/tagParser";
 
 interface Props extends boardItem {
   onRemove: (id: number) => void;
 }
 
 export const BoardCard = ({ id, title, content, tag, onRemove }: Props) => {
+  const tagsArray = parseTagString(tag);
+
   return (
     <Wrapper>
       <BtnContainer>
@@ -16,7 +19,11 @@ export const BoardCard = ({ id, title, content, tag, onRemove }: Props) => {
       <CardContainer>
         <Title>{title}</Title>
         <Content>{content}</Content>
-        <HashTag>{tag}</HashTag>
+        <TagList>
+          {tagsArray.map((tag, index) => (
+            <HashTag key={index}># {tag}</HashTag>
+          ))}
+        </TagList>
       </CardContainer>
     </Wrapper>
   );
@@ -53,7 +60,18 @@ const Content = styled.p`
   line-height: 150%;
 `;
 
-const HashTag = styled.div`
-  font-size: 1rem;
+const TagList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+`;
+
+const HashTag = styled.span`
+  font-size: 0.9rem;
   font-weight: 500;
+  color: black;
+  background-color: #eeeeee;
+  padding: 0.3rem 0.6rem;
+  border-radius: 8px;
+  white-space: nowrap;
 `;

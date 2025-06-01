@@ -1,4 +1,3 @@
-// src/contexts/BoardContext.tsx
 import React, { createContext, useState, useEffect, useContext } from "react";
 
 import { boardItem } from "@/types";
