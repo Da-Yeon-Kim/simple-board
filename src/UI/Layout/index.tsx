@@ -17,10 +17,13 @@ export const Layout = () => {
 };
 
 const Wrapper = styled.div`
-  width: 100%;
+  display: flex;
+  flex-direction: column;
   position: relative;
+  padding: 1rem;
+  gap: 1rem;
 `;
 
 const InnerWrapper = styled.div`
-  min-height: calc(100vh - ${HEADER_HEIGHT}px);
+  height: calc(100vh - ${HEADER_HEIGHT}px - 3rem);
 `;

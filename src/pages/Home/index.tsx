@@ -1,9 +1,25 @@
 import styled from "@emotion/styled";
+import { FormProvider } from "react-hook-form";
+
+import { Board } from "./components/Board";
+import { Write } from "./components/Write";
+import { useWriteContext } from "./hooks/writeContext";
 
 export const HomePage = () => {
-  return <Wrapper>home</Wrapper>;
+  const methods = useWriteContext();
+  return (
+    <FormProvider {...methods}>
+      <Wrapper>
+        <Board />
+        <Write />
+      </Wrapper>
+    </FormProvider>
+  );
 };
 
 const Wrapper = styled.div`
-  padding: 1rem;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  gap: 1rem;
 `;

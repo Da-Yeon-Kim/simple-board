@@ -15,12 +15,13 @@ export const Header = ({ height }: Props) => {
 };
 
 const Wrapper = styled.div<Props>`
+  box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   height: ${(props) => (props.height ? `${props.height}px` : "4rem")};
+  padding: 1rem;
   align-items: center;
   background-color: white;
-  padding: 1rem;
   z-index: 100;
 `;
 
