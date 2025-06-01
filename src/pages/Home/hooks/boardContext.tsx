@@ -16,13 +16,6 @@ export const BoardProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [boardItems, setBoardItems] = useState<boardItem[]>([]);
 
-  useEffect(() => {
-    const storedItems = boardLocalStorage.get();
-    if (storedItems && Array.isArray(storedItems)) {
-      setBoardItems(storedItems);
-    }
-  }, []);
-
   const updateLocalStorageAndState = (newItems: boardItem[]) => {
     boardLocalStorage.set(newItems);
     setBoardItems(newItems);
@@ -49,6 +42,13 @@ export const BoardProvider: React.FC<{ children: React.ReactNode }> = ({
     const newItems = boardItems.filter((item) => item.id !== idToRemove);
     updateLocalStorageAndState(newItems);
   };
+
+  useEffect(() => {
+    const storedItems = boardLocalStorage.get();
+    if (storedItems && Array.isArray(storedItems)) {
+      setBoardItems(storedItems);
+    }
+  }, []);
 
   return (
     <BoardContext.Provider

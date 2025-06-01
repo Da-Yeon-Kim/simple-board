@@ -10,12 +10,12 @@ export const HomePage = () => {
   const methods = useWriteContext();
   return (
     <BoardProvider>
-      <FormProvider {...methods}>
-        <Wrapper>
-          <Board />
+      <Wrapper>
+        <Board />
+        <FormProvider {...methods}>
           <Write />
-        </Wrapper>
-      </FormProvider>
+        </FormProvider>
+      </Wrapper>
     </BoardProvider>
   );
 };

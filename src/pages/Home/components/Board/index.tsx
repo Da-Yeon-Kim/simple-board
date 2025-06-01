@@ -1,38 +1,22 @@
 import styled from "@emotion/styled";
-import { useState } from "react";
-
-import { boardItem } from "@/types";
-
 import { BoardSearch } from "./BoardSearch";
 import { BoardCard } from "./BoardCard";
+import { useBoardList } from "../../hooks/useBoardList";
 import { useBoard } from "../../hooks/boardContext";
 
 export const Board = () => {
   const { boardItems, removeBoardItem } = useBoard();
-  const [searchValue, setSearchValue] = useState<string>("");
-
-  /* 검색 (제목, 본문, 태그 모두 포함) */
-  const filteredBoardItems = boardItems.filter((item: boardItem) => {
-    if (!searchValue) {
-      return true;
-    }
-    const lowerCaseSearchTerm = searchValue.toLowerCase();
-    const matchesTitle = item.title.toLowerCase().includes(lowerCaseSearchTerm);
-    const matchesContent = item.content
-      .toLowerCase()
-      .includes(lowerCaseSearchTerm);
-    const matchesTag = Array.isArray(item.tag)
-      ? item.tag.some((t) => t.toLowerCase().includes(lowerCaseSearchTerm))
-      : item.tag.toLowerCase().includes(lowerCaseSearchTerm);
-    return matchesTitle || matchesContent || matchesTag;
-  });
+  const { search, setSearch, currentItems, isLoading, hasMore, target } =
+    useBoardList({
+      boardItems: boardItems,
+    });
 
   return (
     <Wrapper>
-      <BoardSearch searchValue={searchValue} setSearchValue={setSearchValue} />
+      <BoardSearch searchValue={search} setSearchValue={setSearch} />
       <BoardList>
-        {filteredBoardItems.length > 0 ? (
-          filteredBoardItems.map((item) => (
+        {currentItems.length > 0 ? (
+          currentItems.map((item) => (
             <BoardCard
               key={item.id}
               id={item.id}
@@ -44,10 +28,15 @@ export const Board = () => {
           ))
         ) : (
           <DataNone>
-            {searchValue
-              ? "검색 결과가 없습니다."
-              : "저장된 게시물이 없습니다."}
+            {search ? "검색 결과가 없습니다." : "저장된 게시물이 없습니다."}
           </DataNone>
+        )}
+        {hasMore && (
+          <div ref={target} style={{ height: "20px", margin: "1rem 0" }}>
+            {isLoading && (
+              <LoadingMessage>더 많은 게시물 로딩 중...</LoadingMessage>
+            )}
+          </div>
         )}
       </BoardList>
     </Wrapper>
@@ -62,6 +51,7 @@ const Wrapper = styled.div`
   gap: 1rem;
   border: 1px solid black;
   border-radius: 4px;
+  max-height: calc(100vh - 4rem);
 `;
 
 const BoardList = styled.div`
@@ -75,7 +65,13 @@ const BoardList = styled.div`
 
 const DataNone = styled.p`
   text-align: center;
-  color: #888;
+  color: gray;
   padding: 2rem;
   font-size: 1.2rem;
+`;
+
+const LoadingMessage = styled.p`
+  text-align: center;
+  color: gray;
+  padding: 1rem;
 `;
