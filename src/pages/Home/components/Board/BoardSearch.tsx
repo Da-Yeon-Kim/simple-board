@@ -2,10 +2,24 @@ import styled from "@emotion/styled";
 
 import { ReactComponent as SIcon } from "@/assets/search.svg";
 
-export const BoardSearch = () => {
+interface Props {
+  searchValue: string;
+  setSearchValue: (term: string) => void;
+}
+
+export const BoardSearch = ({ searchValue, setSearchValue }: Props) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(event.target.value);
+  };
+
   return (
     <SearchContainer>
-      <SearchInput />
+      <SearchInput
+        type="text"
+        placeholder="제목, 내용, 태그로 검색..."
+        value={searchValue}
+        onChange={handleInputChange}
+      />
       <SearchIcon />
     </SearchContainer>
   );
