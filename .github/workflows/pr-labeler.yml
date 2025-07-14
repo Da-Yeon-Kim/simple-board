@@ -1,0 +1,30 @@
+name: PR Labeler
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Auto-label PR based on branch name
+      uses: actions/github-script@v7
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const branch = context.payload.pull_request.head.ref;
+          const labels = [];
+
+          if (branch.startsWith('feat/')) labels.push('✨ Feature');
+          if (branch.startsWith('fix/')) labels.push('🐞 BugFix');
+          if (branch.startsWith('docs/')) labels.push('📃 Docs');
+          if (branch.startsWith('refactor/')) labels.push('🔨 Refactor');
+
+          if (labels.length > 0) {
+            await github.rest.issues.addLabels({
+              ...context.repo,
+              issue_number: context.issue.number,
+              labels: labels
+            });
+          }
