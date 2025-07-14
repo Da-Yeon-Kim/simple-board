@@ -1,0 +1,12 @@
+name: "\u2728 Feature 요청"
+description: "기능 추가 작업 이슈"
+title: "[FEAT] "
+labels: ["✨ Feature"]
+body:
+  - type: input
+    id: summary
+    attributes:
+      label: 기능 요약
+      description: 간단히 어떤 기능인지 적어주세요.
+    validations:
+      required: true
