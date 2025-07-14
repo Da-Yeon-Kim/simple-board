@@ -1,0 +1,15 @@
+name: Check PR base branch
+
+on: [pull_request]
+
+jobs:
+  check-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if feature branches merge to develop only
+        if: startsWith(github.head_ref, 'feat/')
+        run: |
+          if [ "${{ github.base_ref }}" != "develop" ]; then
+            echo "❌ Feature branches must merge into develop.";
+            exit 1;
+          fi
