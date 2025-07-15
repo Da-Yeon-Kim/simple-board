@@ -1,0 +1,67 @@
+name: "🐞 Bug Report"
+description: "버그나 오류를 신고합니다"
+title: "[BUG] "
+labels: ["🐞 BugFix"]
+assignees:
+  - ""
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        버그 제보 감사합니다! 아래 항목들을 최대한 상세히 작성해 주세요 🙌
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: 문제 설명
+      description: 어떤 문제가 발생했는지 명확하게 작성해 주세요.
+      placeholder: 예) 페이지를 열었는데 버튼이 작동하지 않아요.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 재현 방법
+      description: 버그를 재현하는 방법을 단계별로 작성해 주세요.
+      placeholder: |
+        1. 홈 페이지로 이동
+        2. '로그인' 버튼 클릭
+        3. 오류 메시지 발생
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 기대한 동작
+      description: 원래는 어떤 동작이 나와야 했는지 작성해 주세요.
+      placeholder: 로그인 화면으로 이동했어야 해요.
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: 환경 정보
+      description: 버그가 발생한 환경을 알려주세요.
+      placeholder: |
+        - OS: macOS Ventura 14.2  
+        - 브라우저: Chrome 125.0.0  
+        - 기기: M1 MacBook Pro
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: 스크린샷 또는 영상
+      description: 가능하면 스크린샷이나 화면 녹화 영상을 첨부해주세요.
+      placeholder: 에러 메시지 캡처 화면 등
+
+  - type: textarea
+    id: etc
+    attributes:
+      label: 기타 참고 사항
+      description: 이 외 공유할 추가 정보가 있다면 작성해주세요.
